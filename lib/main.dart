@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+// Uncomment lines 7 and 10 to view the visual layout at runtime.
+// import 'package:flutter/rendering.dart' show debugPaintSizeEnabled;
 
 void main() {
+  // debugPaintSizeEnabled = true;
   runApp(const MyApp());
 }
 
-class TitleSection extends StatelessWidget {
-  const TitleSection({Key? key}) : super(key: key);
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    Widget titleSection = Container(
       padding: const EdgeInsets.all(32),
       child: Row(
         children: [
@@ -46,23 +49,51 @@ class TitleSection extends StatelessWidget {
         ],
       ),
     );
-  }
-}
 
-class ButtonSection extends StatelessWidget {
-  const ButtonSection({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
     Color color = Theme.of(context).primaryColor;
 
-    return Row(
+    Widget buttonSection = Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         _buildButtonColumn(color, Icons.call, 'CALL'),
         _buildButtonColumn(color, Icons.near_me, 'ROUTE'),
         _buildButtonColumn(color, Icons.share, 'SHARE'),
       ],
+    );
+
+    Widget textSection = const Padding(
+      padding: EdgeInsets.all(32),
+      child: Text(
+        'Lake Oeschinen lies at the foot of the Blüemlisalp in the Bernese '
+        'Alps. Situated 1,578 meters above sea level, it is one of the '
+        'larger Alpine Lakes. A gondola ride from Kandersteg, followed by a '
+        'half-hour walk through pastures and pine forest, leads you to the '
+        'lake, which warms to 20 degrees Celsius in the summer. Activities '
+        'enjoyed here include rowing, and riding the summer toboggan run.',
+        softWrap: true,
+      ),
+    );
+
+    return MaterialApp(
+      title: 'Flutter layout demo',
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Flutter layout demo'),
+        ),
+        body: ListView(
+          children: [
+            Image.asset(
+              'images/lake.jpeg',
+              width: 600,
+              height: 240,
+              fit: BoxFit.cover,
+            ),
+            titleSection,
+            buttonSection,
+            textSection,
+          ],
+        ),
+      ),
     );
   }
 
@@ -84,57 +115,6 @@ class ButtonSection extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class TextSection extends StatelessWidget {
-  const TextSection({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.all(32),
-      child: Text(
-        'Lake Oeschinen lies at the foot of the Blüemlisalp in the Bernese '
-        'Alps. Situated 1,578 meters above sea level, it is one of the '
-        'larger Alpine Lakes. A gondola ride from Kandersteg, followed by a '
-        'half-hour walk through pastures and pine forest, leads you to the '
-        'lake, which warms to 20 degrees Celsius in the summer. Activities '
-        'enjoyed here include rowing, and riding the summer toboggan run.',
-        softWrap: true,
-      ),
-    );
-  }
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Layout Activity',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Flutter Layout Activity'),
-        ),
-        body: Column(
-          // ignore: prefer_const_literals_to_create_immutables
-          children: [
-            Image.asset(
-              'images/lake.jpeg',
-              width: 600,
-              height: 240,
-              fit: BoxFit.cover,
-            ),
-            const TitleSection(),
-            const ButtonSection(),
-            const TextSection()
-          ],
-        ),
-      ),
     );
   }
 }
